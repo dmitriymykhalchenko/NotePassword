@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   Navigator
 } from 'react-native';
+
 const LoginView = require('./LoginView')
 const RegisterView = require('./RegisterView')
 {/*const ProtectedView = require('./ProtectedView')*/}
@@ -30,6 +31,7 @@ class HomeView extends Component {
       backButtonTitle: 'Back'
     })
   }
+
   // {/*// _handleProtectedView = () => {
   // //   this.props.navigator.push({
   // //     title: 'Protected Content',
@@ -42,6 +44,7 @@ class HomeView extends Component {
     AsyncStorage.removeItem('jwt');
     alert('You have been logged out.');
   }
+  
   render() {
     return (
       <View style={styles.container}>
