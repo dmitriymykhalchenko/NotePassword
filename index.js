@@ -8,6 +8,7 @@ import React from 'react';
 import {Provider} from 'react-redux'
 import { StackNavigator, TabNavigator } from 'react-navigation'; // Version can be specified in package.json
 import throttle from 'lodash/throttle'
+import {fromJS} from 'immutable'
 
 import {SERIALIZE_STATE_INTERVAL} from './client/utils/constants'
 import createStore from './client/configs/store'
@@ -25,14 +26,15 @@ class Application extends React.Component {
     }
     // this helps us to save global state in phone memory in order to save it between app sessions
     const init = (initialState) => {
-        this._store = createStore({appData: initialState});
+        // this._store = createStore({appData: initialState });
+        this._store = createStore({appData: fromJS(initialState) });
         const {dispatch} = this._store;
         //save selected state entries to the local storage
         this._store.subscribe(throttle(() => {
             const data = this._store.getState().appData;
             if (data) {
                 const counter = data.get('counter')
-                const note = data.get('note') 
+                const note = data.get('note')
                 // const note = data.get('note') && data.get('note').toJS()
                 saveState({
                     counter,
