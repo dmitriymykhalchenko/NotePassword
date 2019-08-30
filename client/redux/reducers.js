@@ -16,6 +16,11 @@ const appData = (state = stateOps.INITIAL_STATE, action) => {
         case ActionTypes.DECREMENT_COUNTER:
             return stateOps.decrementCounter(state, action.data)
 
+        case ActionTypes.RESET_COUNTER:
+            return stateOps.resetCounter(state, action.data)
+        case ActionTypes.ADD_ITEM:
+            return stateOps.addItem(state, action.data)
+
         default:
             return state;
     }

@@ -32,8 +32,11 @@ class Application extends React.Component {
             const data = this._store.getState().appData;
             if (data) {
                 const counter = data.get('counter')
+                const note = data.get('note') 
+                // const note = data.get('note') && data.get('note').toJS()
                 saveState({
                     counter,
+                    note,
                     // here you can add something alse
                 })
             }

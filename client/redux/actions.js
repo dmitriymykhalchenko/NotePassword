@@ -19,3 +19,15 @@ export function decrementCounter() {
         data: null
     }
 }
+export function resetCounter() {
+    return {
+        type: ActionTypes.RESET_COUNTER,
+        data: null
+    }
+}
+export function addItem(site,log,pass) {
+    return {
+        type: ActionTypes.ADD_ITEM,
+        data: {site,log,pass}
+    }
+}
