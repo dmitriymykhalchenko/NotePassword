@@ -3,7 +3,11 @@ import { View, Text, FlatList, Image, ScrollView, TouchableOpacity, TextInput, A
 
 import {
   incrementCounter,
-  decrementCounter
+  decrementCounter,
+  resetCounter,
+  addItem,
+  logCounter,
+  passCounter
 } from './client/redux/actions'
 
 import {connect} from 'react-redux'
@@ -19,17 +23,17 @@ class JustifyContentBasics extends Component {
       inputText: '',
       isModalVisible: false,
 
+
       items: [
-        {key: 'Facebook', name:'Face', password:'qwerty', color: 'lightgray'},
-        {key: 'Instagram', name:'Face', password:'qwerty', color: 'white'},
-        {key: 'google', name:'Face', password:'qwerty', color: 'orange'},
+        {key: 'Facebook', log:'Face', pass:'qwerty', color: 'lightgray'},
+        {key: 'Instagram', log:'Face', pass:'qwerty', color: 'white'},
+        {key: 'google', log:'Face', pass:'qwerty', color: 'orange'},
       ],
-      value:{
-        name: '',
-        password:'',
-        site:'',
-      },
+
       testModalVisible: false,
+      site:'',
+      log:'',
+      pass:''
     }
 
   }
@@ -37,30 +41,30 @@ class JustifyContentBasics extends Component {
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
-
-  // componentWillUnmount() {
-  //   this.setState = {
-  //     value: {
-  //       name: '',
-  //       password: null
-  //     }
-  //   }
-  // }
+  hideModal= ()=>{
+      this.setState({
+        testModalVisible: !this.state.testModalVisible
+      })
+  }
 
   _addItem() {
-    const newa = this.state.items
+    {/*const newa = this.state.items
     newa.push({key: this.state.site,name: this.state.name,password: this.state.password })
     console.log('add new position', newa)
     return this.setState({items: newa})
-    //   },
-    // )
+*/}
+    this.props.addItem(this.state.site,this.state.log,this.state.pass)
+    return this.setState({addItem: this.props.addItem})
   }
 
   clearText(){
-     this.setState({ name:'', site:'', password:'' })
+     this.setState({ log:'', site:'', pass:'' })
   }
 
   render() {
+
+    console.log("1 ", this.props.note);
+    console.log("2 ", this.props.note && this.props.note.toJS());
     return (
       <SafeAreaView style={{marginTop: 30, flex: 1, alignSelf: 'stretch', backgroundColor: 'white', justifyContent: 'center'}}>
         <SafeAreaView style={{flex: 1, backgroundColor: 'transparent'}}>
@@ -89,27 +93,29 @@ class JustifyContentBasics extends Component {
               value={this.state.site}
               />
             <TextInput  placeholder="Напишіть логин"
-          style={{alignSelf: 'center',justifyContent:'center',height: 50, width: '100%',margin:5, backgroundColor: 'lightblue'}}
-          onChangeText={(name) => {
-          console.log('name-', name)
-          this.setState({name})
-          }}
-          value={this.state.name}
-          />
-
+                style={{alignSelf: 'center',justifyContent:'center',height: 50, width: '100%',margin:5, backgroundColor: 'lightblue'}}
+                onChangeText={(log) => {
+                console.log('log-', log)
+                this.setState({log})
+                }}
+                value={this.state.log}
+                />
+            <View style={{ borderRadius: 25,alignSelf:'center', borderWidth: 1.5, position: 'absolute', bottom: 220,  padding: 15,width:350, backgroundColor: '#0481B0'}}>
+              <Button title="Закрити" onPress={this.toggleModal} />
+            </View>
 
               <TextInput
                 placeholder="+ Напишіть пароль і тисніть зберегти"
                 autoCorrect={false}
                 secureTextEntry={true}
                 returnKeyType="done"
-                onChangeText={(password) => this.setState({password})}
+                onChangeText={(pass) => this.setState({pass})}
                 style={{height: 50, width: '100%',alignSelf: 'center', backgroundColor: 'lightblue'}}
-                onChangeText={(password) => {
-                  console.log('password-', password)
-                  this.setState({password})
+                onChangeText={(pass) => {
+                  console.log('pass-', pass)
+                  this.setState({pass})
                 }}
-                value={this.state.password}
+                value={this.state.pass}
                 />
 
               <TouchableOpacity
@@ -123,52 +129,53 @@ class JustifyContentBasics extends Component {
                 >
                <Text style={{color: 'white'}}> <Icon name="rocket" size={30} color="#900" /> Зберегти  </Text>
               </TouchableOpacity>
-
-              <View style={{ borderRadius: 25,alignSelf:'center', borderWidth: 1.5, position: 'absolute', bottom: 320,  padding: 15,width:350, backgroundColor: '#0481B0'}}>
-                <Button title="Закрити" onPress={this.toggleModal} />
-              </View>
-
           </SafeAreaView>
         </Modal>
       </View>
 
-
-          <FlatList
-            data={this.state.items}
+      <FlatList
+            data={this.props.note && this.props.note.toJS()}
             renderItem={({item}) =>
               (<View style={{alignSelf: 'stretch', justifyContent: 'center', height: 60, borderWidth: 1, alignItems: 'flex-start',justifyContent:'center', backgroundColor: item.color}}>
-              <Text style={{ backgroundColor: 'lightgray'}}> {item.key}</Text>
+            <Text style={{ backgroundColor: 'lightgray'}}> {item.site}</Text>
+                <Text style={{}}>   log {item.log}  pass {item.pass}</Text>
 
-                <Text style={{}}>   log {item.name}  pass {item.password}</Text>
               </View>)
             }
           />
 
+
+          <TouchableOpacity
+                    onPress={() => {
+                      this.setState({testModalVisible: !this.state.testModalVisible})
+                    }}
+                    style={{alignSelf:'center', backgroundColor: 'lightblue', padding: 15, borderRadius: 20, zIndex: 2}}
+                    >
+                    <Text style={{}}>Open test counter</Text>
+                  </TouchableOpacity>
+
+                  <Modal isVisible={this.state.testModalVisible}>
+                    <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+                      <TouchableOpacity style={{marginLeft: 40, padding: 20, backgroundColor: 'lightblue'}} onPress={() => this.props.incrementCounter()}>
+                        <Text>+1</Text>
+                      </TouchableOpacity>
+                      <Text style={{margin: 2}}>{ this.props.note}</Text>
+
+                      <Text style={{margin: 2}}>{'Counter = ' + this.props.counter}</Text>
+
+                      <TouchableOpacity style={{margin: 10, padding: 20, backgroundColor: 'lightblue'}} onPress={() => this.props.decrementCounter()}>
+                        <Text>-1</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={{margin: 10, padding: 20, backgroundColor: 'lightblue'}} onPress={() => this.props.resetCounter()}>
+                        <Text>0</Text>
+                      </TouchableOpacity>
+                      <View style={{ borderRadius: 25,alignSelf:'center', borderWidth: 1.5, position: 'absolute', bottom: 220,  padding: 15,width:350,alignSelf:'center', backgroundColor: '#0481B0'}}>
+                        <Button title="Закрити" onPress={this.hideModal} />
+                      </View>
+                    </View>
+                  </Modal>
         </SafeAreaView>
 
-
-        <TouchableOpacity
-          onPress={() => {
-            this.setState({testModalVisible: !this.state.testModalVisible})
-          }}
-          style={{position: 'absolute', bottom: 20, right: 20, backgroundColor: 'lightblue', padding: 15, borderRadius: 20, zIndex: 2}}
-          >
-          <Text style={{}}>Open test counter</Text>
-        </TouchableOpacity>
-
-        <Modal isVisible={this.state.testModalVisible}>
-          <View style={{flex: 1, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
-            <TouchableOpacity style={{margin: 20, padding: 20, backgroundColor: 'lightblue'}} onPress={() => this.props.incrementCounter()}>
-              <Text>+1</Text>
-            </TouchableOpacity>
-
-            <Text style={{margin: 20}}>{'Counter = ' + this.props.counter}</Text>
-
-            <TouchableOpacity style={{margin: 20, padding: 20, backgroundColor: 'lightblue'}} onPress={() => this.props.decrementCounter()}>
-              <Text>-1</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
 
       </SafeAreaView>
 
@@ -179,6 +186,7 @@ class JustifyContentBasics extends Component {
 function mapStateToProps(state) {
     return {
         counter: state.appData.get('counter'),
+        note: state.appData.get('note'),
     }
 }
 
@@ -190,6 +198,13 @@ function mapDispatchToProps(dispatch) {
         decrementCounter() {
             dispatch(decrementCounter())
         },
+        resetCounter() {
+            dispatch(resetCounter())
+        },
+        addItem(site,log,pass){
+            dispatch(addItem(site,log,pass))
+        },
+
     }
 }
 

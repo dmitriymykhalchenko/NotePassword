@@ -34,11 +34,12 @@ export default class SignUp extends React.Component {
           placeholderTextColor='white'
           onChangeText={val => this.onChangeText('username', val)}
         />
-        <TextInput
+            <TextInput
           style={styles.input}
           placeholder='Password'
           secureTextEntry={true}
           autoCapitalize="none"
+
           placeholderTextColor='white'
           onChangeText={val => this.onChangeText('password', val)}
         />
