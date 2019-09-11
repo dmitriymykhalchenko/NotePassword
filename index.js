@@ -35,10 +35,15 @@ class Application extends React.Component {
             if (data) {
                 const counter = data.get('counter')
                 const note = data.get('note')
+                const addItem = data.get('addItem')
+                const editItem = data.get ('editItem')
+
                 // const note = data.get('note') && data.get('note').toJS()
                 saveState({
                     counter,
                     note,
+                    addItem,
+                    editItem,
                     // here you can add something alse
                 })
             }

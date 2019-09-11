@@ -20,7 +20,10 @@ const appData = (state = stateOps.INITIAL_STATE, action) => {
             return stateOps.resetCounter(state, action.data)
         case ActionTypes.ADD_ITEM:
             return stateOps.addItem(state, action.data)
-
+        case ActionTypes.RESET_ADDITEM:
+            return stateOps.resetaddItem(state, action.data)
+        case ActionTypes.ADD_EDITITEM:
+            return stateOps.editItem(state, action.data)
         default:
             return state;
     }

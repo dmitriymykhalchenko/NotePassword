@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import EditItemScreen from './EditItemScreen';
+import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
-import JustifyContentBasics from './JustifyContentBasics';
+//import JustifyContentBasics from './JustifyContentBasics';
   const AppNavigator = createStackNavigator(
       {
-          EditItem: EditItemScreen,
+          Home: HomeScreen,
           Profile: ProfileScreen,
-          JustifyContentBasics: JustifyContentBasics,
-
+          //JustifyContentBasics: JustifyContentBasics
       },
       {
           initialRouteName: "JustifyContentBasics",

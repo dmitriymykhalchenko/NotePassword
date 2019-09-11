@@ -31,3 +31,15 @@ export function addItem(site,log,pass) {
         data: {site,log,pass}
     }
 }
+export function resetaddItem() {
+    return {
+        type: ActionTypes.RESET_ADDITEM,
+        data: null
+    }
+}
+export function editItem() {
+    return {
+        type: ActionTypes.ADD_EDITITEM,
+        data: null
+    }
+}

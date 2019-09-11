@@ -5,6 +5,7 @@ import {fromJS, List, Map, Set} from 'immutable';
 export const INITIAL_STATE = fromJS({
     counter: 0,
     note:[],
+    
 })
 
 
@@ -35,4 +36,11 @@ export function addItem(state, value) {
   console.log(item);
   newState = newState.update('note',oldnote => oldnote.push(item) )
   return newState;
+}
+export function resetaddItem(state, value) {
+
+  //let newState = state.set('note', List())
+
+  //return newState;
+  return INITIAL_STATE
 }
