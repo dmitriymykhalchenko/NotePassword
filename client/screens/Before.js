@@ -59,6 +59,8 @@ static navigationOptions = ({navigation}) => {
 
     console.log(this.props.enablePin);
     console.log('UNSAFE_componentWillMount()');
+    console.log('UNSAFE_componentWillMount()');
+    console.log('UNSAFE_componentWillMount()');
   }
 
   render() {
