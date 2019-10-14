@@ -39,13 +39,3 @@ target 'NotePassword' do
 
   use_native_modules!
 end
-
-target 'NotePassword-tvOS' do
-  # Pods for NotePassword-tvOS
-
-  target 'NotePassword-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end

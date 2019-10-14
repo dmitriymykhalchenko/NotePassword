@@ -1,24 +1,32 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import EditItemScreen from './EditItemScreen';
-import ProfileScreen from './ProfileScreen';
-import JustifyContentBasics from './JustifyContentBasics';
-  const AppNavigator = createStackNavigator(
-      {
-          EditItem: EditItemScreen,
-          Profile: ProfileScreen,
-          JustifyContentBasics: JustifyContentBasics,
+import React from 'react'//navigator
+import { View, Text, Button } from 'react-native'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
+import EditItemScreen from './client/screens/EditItemScreen'
+import SettingScreen from './client/screens/SettingScreen'
+import PinScreen from './client/screens/PinScreen'
+import JustifyContentBasics from './client/screens/JustifyContentBasics'
+import Before from './client/screens/Before'
 
-      },
-      {
-          initialRouteName: "JustifyContentBasics",
+const AppNavigator = createStackNavigator(
+  {
+    EditItem: EditItemScreen,
+    //DetailsScreen: DetailsScreen,
+    JustifyContentBasics,
+    SettingScreen,
+    PinScreen,
+    Before
 
-      }
-  );
-    const AppContainer = createAppContainer(AppNavigator);
-    export default class App extends React.Component {
-        render() {
-            return <AppContainer />;
-        }
-    }
+
+  },
+  {
+
+    initialRouteName: 'Before'
+
+  }
+)
+const AppContainer = createAppContainer(AppNavigator)
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />
+  }
+}
