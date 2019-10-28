@@ -10,18 +10,13 @@ import Before from './client/screens/Before'
 const AppNavigator = createStackNavigator(
   {
     EditItem: EditItemScreen,
-    //DetailsScreen: DetailsScreen,
     JustifyContentBasics,
     SettingScreen,
     PinScreen,
     Before
-
-
   },
   {
-
     initialRouteName: 'Before'
-
   }
 )
 const AppContainer = createAppContainer(AppNavigator)

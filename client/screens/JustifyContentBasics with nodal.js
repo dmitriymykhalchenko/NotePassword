@@ -151,18 +151,6 @@ constructor(props) {
           this.toggleModal()
         }}
       >
-        {/*// if (this.state.enableUp == true){console.log("good")
-          // return ;}
-          // <TouchableOpacity
-          //     style={{ borderRadius: 25,alignSelf:'center',flex: 1/15, backgroundColor: 'darkblue'}}
-          //     onPress={() => {
-          //       console.log('button is pressed')
-          //       this._addItem()
-          //       this.clearText()
-          //       this.toggleModal()
-          //     }}
-          //     >*/}
-
 
         <View style={{ color: 'white', borderRadius: 10, flex: 1, backgroundColor: 'transparent', justifyContent: 'center', flexDirection: 'column' }}>
 

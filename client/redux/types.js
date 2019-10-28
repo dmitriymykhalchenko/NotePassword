@@ -1,16 +1,12 @@
-'use strict'//состояние
-
-// export const INCREMENT_COUNTER = "INCREMENT_COUNTER"
-// export const DECREMENT_COUNTER = "DECREMENT_COUNTER"
-// export const RESET_COUNTER = "RESET_COUNTER"
-export const ADD_ITEM = "ADD_ITEM"
-export const ADD_ITEMUP = "ADD_ITEMUP"
-export const ADD_ITEMDOWN = "ADD_ITEMDOWN"
-export const ENABLE_PIN = "ENABLE_PIN"
-export const PIN_CODE = "PIN_CODE"
-export const RESET_ADDITEM = "RESET_ADDITEM"
-export const DELETE_ADDITEM = "DELETE_ADDITEM"
-export const DELETE_UPDATEADDITEM = "DELETE_UPDATEADDITEM"
-export const ADD_EDITITEM = "ADD_EDITITEM"
-export const ADD_EDITITEMINDEX = "ADD_EDITITEMINDEX"
-export const UPDATE_ITEM = "UPDATE_ITEM"
+//состояние
+export const ADD_ITEM = 'ADD_ITEM'
+export const ADD_ITEMUP = 'ADD_ITEMUP'
+export const ADD_ITEMDOWN = 'ADD_ITEMDOWN'
+export const ENABLE_PIN = 'ENABLE_PIN'
+export const PIN_CODE = 'PIN_CODE'
+export const RESET_ADDITEM = 'RESET_ADDITEM'
+export const DELETE_ADDITEM = 'DELETE_ADDITEM'
+export const DELETE_UPDATEADDITEM = 'DELETE_UPDATEADDITEM'
+export const ADD_EDITITEM = 'ADD_EDITITEM'
+export const ADD_EDITITEMINDEX = 'ADD_EDITITEMINDEX'
+export const UPDATE_ITEM = 'UPDATE_ITEM'

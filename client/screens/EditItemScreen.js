@@ -1,6 +1,5 @@
 
 import React from 'react'//WebSite,login,password
-//import react in our code.
 import { StyleSheet, View, Button, SafeAreaView, TextInput, Text, Switch, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import {
@@ -12,14 +11,12 @@ import SettingScreen from './SettingScreen'
 
 class EditItemScreen extends React.Component {
   static navigationOptions = {
-    //title: 'EditItem',
     headerStyle: {
       backgroundColor: '#FFF'
     },
     headerTintColor: 'red',
     headerTitleStyle: {
       fontWeight: 'bold'
-
     }
   };
 
@@ -46,16 +43,16 @@ class EditItemScreen extends React.Component {
   render() {
     console.log(this.state)
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: 'lightgray' }}>
-        <View style={{ flex: 3, alignItems: 'flex-start', justifyContent: 'flex-start', margin: 15, backgroundColor: 'transparent' }}>
-          <View style={{ alignSelf: 'flex-start' }}>
-            <Text style={{ color: 'white', fontSize: 14, fontWeight: 'bold', color: 'black' }}>  WebSite:  </Text>
+      <SafeAreaView style={styles.mainX}>
+        <View style={styles.main}>
+          <View style={styles.WebSiteView}>
+            <Text style={styles.WebSiteText}>  WebSite:  </Text>
           </View>
-          <View style={{ alignSelf: 'stretch', borderRadius: 15, backgroundColor: 'darkgray' }}>
+          <View style={styles.ViewInput}>
 
             <TextInput
               placeholder={this.state.site}
-              style={{ padding: 15, borderRadius: 15, backgroundColor: 'darkgray' }}
+              style={styles.TextIn}
               onChangeText={(text) => {
                 console.log('site-', text)
                 this.setState({ site: text })
@@ -64,7 +61,7 @@ class EditItemScreen extends React.Component {
             />
           </View>
           <TouchableOpacity
-            style={{ padding: 5, marginTop: 5, alignSelf: 'center', backgroundColor: 'lightblue' }}
+            style={styles.TouchDel}
             onPress={() => {
               console.log('button is pressed delete')
               this.props.deleteaddItem()
@@ -75,15 +72,15 @@ class EditItemScreen extends React.Component {
             <Text>Delete</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 3, alignItems: 'flex-start', justifyContent: 'flex-start', margin: 15, backgroundColor: 'transparent' }}>
-          <View style={{ alignSelf: 'flex-start' }}>
-            <Text style={{ color: 'white', fontSize: 14, fontWeight: 'bold', color: 'black' }}>  Login:  </Text>
+        <View style={styles.mainLog}>
+          <View style={styles.ViewLog}>
+            <Text style={styles.TextLog}>  Login:  </Text>
           </View>
-          <View style={{ alignSelf: 'stretch', borderRadius: 15, backgroundColor: 'darkgray' }}>
+          <View style={styles.InputLog}>
 
             <TextInput
               placeholder={this.state.log}
-              style={{ padding: 15, borderRadius: 15, backgroundColor: 'darkgray' }}
+              style={styles.TextInLog}
               onChangeText={(text) => {
                 console.log('log-', text)
                 this.setState({ log: text })
@@ -92,20 +89,19 @@ class EditItemScreen extends React.Component {
             />
           </View>
         </View>
-        <View style={{ flex: 3, margin: 15, backgroundColor: 'transparent' }}>
-          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-            <Text style={{ color: 'white', fontSize: 14, fontWeight: 'bold', color: 'black', backgroundColor: 'transparent' }}>  Password:  </Text>
+        <View style={styles.mainPass}>
+          <View style={styles.ViewPass}>
+            <Text style={styles.TextPass}>  Password:  </Text>
             <Switch
-              style={{ backgroundColor: 'transparent' }}
+              //style={{ backgroundColor: 'transparent' }}
               onValueChange={this.toggleSwitch}
               value={!this.state.showPass}
             />
           </View>
-          <View style={{ alignSelf: 'stretch', borderRadius: 15, backgroundColor: 'darkgray' }}>
-
+          <View style={styles.InputPass}>
             <TextInput
               placeholder={this.state.pass}
-              style={{ padding: 15, borderRadius: 15, backgroundColor: 'darkgray' }}
+              style={styles.TextInPass}
               secureTextEntry={this.state.showPass}
               onChangeText={(text) => {
                 console.log('pass-', text)
@@ -113,48 +109,151 @@ class EditItemScreen extends React.Component {
               }}
               value={this.state.pass}
             />
-
           </View>
         </View>
-        <View style={{ flex: 4, alignItems: 'center', justifyContent: 'center', borderRadius: 15, backgroundColor: 'transparent' }}>
-
+        <View style={styles.mainSave}>
           <TouchableOpacity
-            style={{ borderRadius: 15, padding: 15, paddingLeft: 70, paddingRight: 70, alignSelf: 'center', backgroundColor: 'blue' }}
+            style={styles.TouchSave}
             onPress={() => {
               console.log('button is pressed')
               this.props.updateItem(this.state.site, this.state.log, this.state.pass)
               this.props.navigation.goBack()
             }}
           >
-            <View style={{ borderRadius: 25, alignSelf: 'center', backgroundColor: 'blue' }}>
-              <Text style={{ color: 'white' }}>  Зберегти  </Text>
+            <View style={styles.ButView}>
+              <Text style={styles.SaveText}>  Зберегти  </Text>
             </View>
           </TouchableOpacity>
-
         </View>
       </SafeAreaView>
     )
   }
 }
+const styles = StyleSheet.create({
+  mainX: {
+    flex: 1,
+    backgroundColor: 'lightgray'
+  },
+  main: {
+    flex: 3,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    margin: 15,
+    backgroundColor: 'transparent'
+  },
+  WebSiteView: {
+    alignSelf: 'flex-start'
+  },
+  WebSiteText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  ViewInput: {
+    alignSelf: 'stretch',
+    borderRadius: 15,
+    backgroundColor: 'darkgray'
+  },
+  TextIn: {
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: 'darkgray'
+  },
+  TouchDel: {
+    padding: 5,
+    marginTop: 5,
+    alignSelf: 'center',
+    backgroundColor: 'lightblue'
+  },
+  mainLog: {
+    flex: 3,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    margin: 15,
+    backgroundColor: 'transparent'
+  },
+  ViewLog: {
+    alignSelf: 'flex-start'
+  },
+  TextLog: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  InputLog: {
+    alignSelf: 'stretch',
+    borderRadius: 15,
+    backgroundColor: 'darkgray'
+  },
+  TextInLog: {
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: 'darkgray'
+  },
+  mainPass: {
+    flex: 3,
+    margin: 15,
+    backgroundColor: 'transparent'
+  },
+  ViewPass: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between'
+  },
+  TextPass: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'black',
+    backgroundColor: 'transparent'
+  },
+  InputPass: {
+    alignSelf: 'stretch',
+    borderRadius: 15,
+    backgroundColor: 'darkgray'
+  },
+  TextInPass: {
+    padding: 15,
+    borderRadius: 15,
+    backgroundColor: 'darkgray'
+  },
+  mainSave: {
+    flex: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 15,
+    backgroundColor: 'transparent'
+  },
+  TouchSave: {
+    borderRadius: 15,
+    padding: 15,
+    paddingLeft: 70,
+    paddingRight: 70,
+    alignSelf: 'center',
+    backgroundColor: 'blue'
+  },
+  ButView: {
+    borderRadius: 25,
+    alignSelf: 'center',
+    backgroundColor: 'blue'
+  },
+  SaveText: {
+    color: 'white',
+    fontSize: 20
+  }
+
+})
 function mapStateToProps(state) {
   return {
-
     index: state.appData.get('index'), //достаем з редакса поле индекс
     note: state.appData.get('note')
-
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    // incrementCounter() {
-    //     dispatch(incrementCounter())
-    // },
-    // decrementCounter() {
-    //     dispatch(decrementCounter())
-    // },
-    // resetCounter() {
-    //     dispatch(resetCounter())
-    //},
+
     updateItem(site, log, pass) {
       dispatch(updateItem(site, log, pass))
     },
@@ -175,7 +274,6 @@ function mapDispatchToProps(dispatch) {
     }
   }
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
