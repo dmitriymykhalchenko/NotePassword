@@ -1,5 +1,5 @@
 import React from 'react'//проверка піна
-import { Alert, View, Text, Keyboard, KeyboardAvoidingView, FlatList, Dimensions, Image, StyleSheet, Switch, ScrollView, TouchableOpacity, TextInput, SafeAreaView } from 'react-native'
+import { Alert, View, Text, Keyboard, StatusBar, KeyboardAvoidingView, FlatList, Dimensions, Image, StyleSheet, Switch, ScrollView, TouchableOpacity, TextInput, SafeAreaView } from 'react-native'
 import { createStackNavigator, createAppContainer, withNavigation, NavigationActions, StackActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import Modal from 'react-native-modal'
@@ -35,37 +35,32 @@ class PinScreen extends React.Component {
     super(props)
     this.toggleSwitch = this.toggleSwitch.bind(this)
     this.onComplete = this.onComplete.bind(this)
-    // this.myNumber = this.myNumber.bind(this);
-    // this.pin = this.pin.bind(this);
     this.state = {
       inputText: '',
       showPass: props.enablePin,
       myNumber: '',
-      //pin: '1111',
       pin: props.pinCode,
+      //pin: '1111',
       Code: 'Code must be 4-digit',
       Wrong: 'Wrong PIN',
       calculationText: ''
     }
   }
 
-
-
   buttonPressed(text) {
-    let newText = this.state.inputText + text
+    const newText = this.state.inputText + text
     const newTextLength = newText.length
     if (newTextLength > 4) {
-      return;
+      return
     }
     const oldTextLength = this.state.inputText.length
 
     if (newTextLength === 4 && oldTextLength === 3) {
-
       this.onComplete(newText)
     }
 
     this.setState({
-      inputText:newText
+      inputText: newText
     })
   }
 
@@ -85,10 +80,8 @@ class PinScreen extends React.Component {
     }
   }
 
-
   toggleSwitch() {
     this.setState({ showPass: !this.state.showPass })
-
   }
 
   saveAction() {
@@ -106,13 +99,11 @@ class PinScreen extends React.Component {
     this.setState({ inputText: '' })
   }
 
-
   renderElement() {
-    if (this.state.inputText !== this.state.pin && this.state.inputText.length === 4 ) {
-      return <Text style={{ color: 'red', marginTop: 15, marginLeft: 10, fontWeight: 'bold', fontSize: 16 }}>{this.state.Wrong} </Text>
+    if (this.state.inputText !== this.state.pin && this.state.inputText.length === 4) {
+      return <Text style={styles.wrong}>{this.state.Wrong} </Text>
     }
-
-    return <Text style={{ color: 'gray', marginTop: 15, marginLeft: 10, fontWeight: 'bold', fontSize: 16 }}>{this.state.Code} </Text>
+    return <Text style={styles.code}>{this.state.Code} </Text>
   }
 
   render() {
@@ -121,36 +112,21 @@ class PinScreen extends React.Component {
     for (let i = 0; i < 4; i++) {
       const row = []
       for (let j = 0; j < 3; j++) {
-        row.push(<TouchableOpacity 
-          onPress={() => this.buttonPressed(nums[i][j])}
+        row.push(<TouchableOpacity
+          onPress={() => {
+            this.buttonPressed(nums[i][j])
+            console.log(nums[i][j])
+          }}
           disabled={!nums[i][j] && nums[i][j] !== 0}////////????
           key={nums[i][j]}
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            alignSelf: 'stretch',
-            justifyContent: 'center',
-            margin: 5,
-            borderRadius:15,
-            borderColor: 'gray',
-            backgroundColor: 'rgb(242,242,242)',
-            borderWidth: 1.9,
-            width: 35 }}
+          style={nums[i][j] >= 0 ? styles.nums : styles.numsEmpty}
         >
-          <Text
-            style={{ fontSize: 30,padding:15
-            }}
-          >{nums[i][j]}
-          </Text>
-                 </TouchableOpacity>)
+          <Text style={styles.numsfont}>{nums[i][j]}</Text>
+        </TouchableOpacity>)
       }
       rows.push(<View
         key={i}
-        style={{ flexDirection: 'row',
-          flex: 1,
-          backgroundColor:'transparent',
-          justifyContent: 'space-around',
-          alignItems: 'center' }}
+        style={styles.textIn}
       >{row}
       </View>)
     }
@@ -163,78 +139,140 @@ class PinScreen extends React.Component {
       )
     }
     return (
-
-      <SafeAreaView style={{ flex: 1, alignItems: 'stretch', backgroundColor: 'lightgray', justifyContent: 'space-between' }}>
-        <View style={{ flex: 1 / 9, flexDirection: 'row', marginLeft: 15, marginRight: 15, marginTop: 100, justifyContent: 'center', backgroundColor: 'transparent' }}>
-          <Text style={{ color: 'white', fontSize: 22, color: 'black', backgroundColor: 'transparent' }}> Enter PIN code  </Text>
+      <SafeAreaView style={styles.mainx}>
+        <StatusBar hidden />
+        <View style={styles.enter}>
+          <Text style={styles.tenter}> Enter PIN code  </Text>
         </View>
-        <View style={{ flex: 1, marginRight: 20, marginLeft: 20, backgroundColor: 'transparent' }}>
-
+        <View style={styles.textback}>
           <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignSelf: 'center', backgroundColor: '#fff', borderWidth: 0.5, borderColor: '#000', height: 40, borderRadius: 5, margin: 10 }}>
-              <Text style={{ fontSize: 30, width: 280, justifyContent: 'center', color: 'black' }}>{this.state.inputText}</Text>
+            <View style={styles.touchtext}>
+              <Text style={styles.statetext}>{this.state.inputText}</Text>
               <TouchableOpacity
-                style={{ padding: 10, alignSelf: 'flex-end', backgroundColor: 'transparent' }}
+                style={styles.touchclear}
                 onPress={() => this.onClear()}
               >
-                <Image source={require('../../img/backspace.png')} style={{ padding: 10, marginLeft: 30, height: 5, width: 25, resizeMode: 'stretch', alignItems: 'flex-end', justifyContent: 'flex-end', backgroundColor: 'transparent' }} />
+                <Image
+                  source={require('../../img/backspace.png')}
+                  style={styles.backspace}
+                />
               </TouchableOpacity>
             </View>
-            {/*<Text style={{color:"gray",marginTop:15,marginLeft:10,fontWeight:'bold',fontSize:16,}}>{this.state.Code}</Text>
-        {this.state.myNumber === this.state.pin ? <Text style={{color:"gray",marginTop:15,marginLeft:10,fontWeight:'bold',fontSize:16,}}>{this.state.Code}  </Text>:false}
-        {this.state.myNumber !== this.state.pin ? <Text style={{color:"red",marginTop:15,marginLeft:10,fontWeight:'bold',fontSize:16,}}>{this.state.Wrong}  </Text>:false
-        }*/}
-
-            <View>{ this.renderElement() }</View>
-            <View style={{ flex: 7,
-              flexDirection: 'row',
-              margin: 10 }}
-            >
-              <View style={{ flex: 3,
-                backgroundColor: 'transparent',
-                borderColor: 'red',
-                width: 15,
-
-                padding: 10
-              }}
-              >
+            <View style={{}}>{ this.renderElement() }</View>
+            <View style={styles.x}>
+              <View style={styles.y}>
                 {rows}
-
               </View>
             </View>
           </View>
         </View>
       </SafeAreaView>
-
     )
   }
 }
-
 const styles = StyleSheet.create({
-  row: {
+  y: {
+    flex: 1,
+    width: 15,
+    padding: 10
+  },
+  x: {
+    flex: 1,
     flexDirection: 'row',
+    margin: 25
+  },
+  backspace: {
+    position: 'absolute',
+    height: 35,
+    width: 35,
+    bottom: -8,
+    left: 12,
+    tintColor: 'rgb(180,180,180)',
+    backgroundColor: 'transparent'
+  },
+  touchclear: {
+    padding: 10, alignSelf: 'center', backgroundColor: 'transparent'
+  },
+  statetext: {
+    fontSize: 40, marginLeft: 80, fontFamily: 'verdana', width: '50%', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', backgroundColor: 'transparent', color: 'black'
+  },
+  touchtext: {
+    flexDirection: 'row', marginRight: 20, marginLeft: 20, width: '100%', justifyContent: 'center', alignSelf: 'center', backgroundColor: 'white', borderWidth: 0.5, borderColor: 'rgb(180,180,180)', height: 65, borderRadius: 10
+  },
+  textback: {
+    flex: 1, marginRight: 20, marginLeft: 20, backgroundColor: 'transparent'
+  },
+  tenter: {
+    color: 'white',
+    fontSize: 22,
+    fontWeight: '600',
+    color: 'black',
+    backgroundColor: 'transparent' },
+  enter: {
+    flex: 1 / 13,
+    flexDirection: 'row',
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 70,
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  mainx: {
     flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  btntext: {
-    fontSize: 30
-
-  },
-  white: {
-    color: 'white'
-  },
-  btn: {
-    flex: 1,
+    alignItems: 'stretch',
+    backgroundColor: 'rgb(242,242,242)',
+    justifyContent: 'space-between' },
+  nums: {
     alignItems: 'center',
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    margin: 5,
+    borderRadius: 15,
+    borderColor: 'rgb(180,180,180)',
+    backgroundColor: 'rgb(242,242,242)',
+    borderWidth: 1,
+    width: '26%',
+    height: '70%'
   },
-  hideText: {
-    color: '#fff',
-    fontSize: 1,
-    textAlign: 'right'
+  numsEmpty: {
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    margin: 5,
+    backgroundColor: 'rgb(242,242,242)',
+    width: '26%',
+    height: '70%'
   },
+  numsfont: {
+    fontSize: 27,
+    color: 'rgb(176,176,176)',
+    padding: 10,
+    fontWeight: '400',
+    fontFamily: 'verdana'
+  },
+  wrong: {
+    color: 'red',
+    marginLeft: 10,
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 10
+  },
+  code: {
+    color: 'rgb(180,180,180)',
+    marginLeft: 10,
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 10
+  },
+  textIn: {
+    flexDirection: 'row',
+    flex: 2,
+    width: '100%',
+    //backgroundColor:'red',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+
   item: {
     backgroundColor: 'yellow',
     alignItems: 'center',
@@ -246,52 +284,18 @@ const styles = StyleSheet.create({
     borderWidth: 0.5
   },
   title: {
-    fontSize: 20
-
-
-  },
-  mContainer: {
-    position: 'absolute',
-    // //height: 105,
-    // //width: 'width',
-    // bottom: 0,
-    // left: 0,
-    // right: 0,
-    backgroundColor: 'transparent'
-  },
-  mContent: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    paddingVertical: 15
-  },
-  textInputStyle: {
-    marginHorizontal: 15,
-    flex: 1,
-    height: 40,
-    color: '#000',
-    fontSize: 14,
-    textAlign: 'left',
-    textAlignVertical: 'center',
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    paddingLeft: 10,
-    borderRadius: 5,
-    borderColor: '#6f6f6f',
-    borderWidth: 0.5,
-    backgroundColor: '#f5f5f5'
+    fontSize: 20,
+    backgroundColor: 'rgb(180,180,180)'
   }
-
-
 })
+
 function mapStateToProps(state) {
   return {
     enablePin: state.appData.get('enablePin'),
     pinCode: state.appData.get('pinCode')
-
   }
 }
+
 function mapDispatchToProps(dispatch) {
   return {
 

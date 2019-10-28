@@ -41,33 +41,31 @@ class SettingScreen extends React.Component {
      }
    }
 
+
    constructor(props) {
      super(props)
      this.toggleSwitch = this.toggleSwitch.bind(this)
      this.state = {
        inputText: '',
        showPass: props.enablePin,
-       myNumber: props.pinCode
+       myNumber: props.pinCode,
        //newText: ''
      }
      this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
    }
 
    toggleSwitch() {
-     this.setState({ showPass: !this.state.showPass },
-       // () => {
-       //   this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-       // }
+     this.setState(
+       { showPass: !this.state.showPass },
+       () => {
+         this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
+       }
      )
    }
 
    renderElement() {
-     // this.state.myNumber.length === 4 && if (this.state.myNumber.length === 4 && (this.state.showPass !== this.props.enablePin || this.props.pinCode !== this.state.myNumber)) {
-      //включили пін або змінили
-     let enable1 =  this.state.showPass === true && (this.props.pinCode !== this.state.myNumber || this.state.showPass !== this.props.enablePin)
-     // виключили пін код
-     let enable2 = this.state.showPass === false && this.state.showPass !== this.props.enablePin
-     if (enable1 === true  || enable2 === true ) {
+     console.log(this.state.myNumber.length)
+     if (this.state.myNumber.length === 4 && this.state.showPass === this.props.enablePin) {
        return (
          <TouchableOpacity
            onPress={() =>
@@ -104,6 +102,10 @@ class SettingScreen extends React.Component {
    }
 
 
+   componentDidMount() {
+     this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
+   }
+
    onChanged(text) {
      let newText = ''
      const numbers = '0123456789'
@@ -117,45 +119,13 @@ class SettingScreen extends React.Component {
          alert('please enter numbers only')
        }
      }
-     this.setState({ myNumber: newText },
-       // () => {
-       //   this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-       // }
+     this.setState(
+       { myNumber: newText },
+       () => {
+         this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
+       }
      )
    }
-
-   // componentDidMount() {
-   //  // this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-   // }
-
-   componentDidUpdate(prevProps, prevState) {
-     // вимкнули пін код
-     if (prevState.showPass !== this.state.showPass || this.state.myNumber !== prevState.myNumber) {
-       this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-     }
-     // if (prevState.showPass === true && this.state.showPass === false) {
-     //   this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-     // }
-     // //включили пін код 4 цифри
-     // if (prevState.showPass === false && this.state.showPass === true && this.state.myNumber.length === 4) {
-     //   this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-     // }
-     // // пін код вкл і змінився
-     // if (this.state.showPass === true && this.state.myNumber !== prevState.myNumber ) {
-     // if (this.state.showPass === true && this.state.myNumber !== prevState.myNumber ) {
-     //   this.props.navigation.setParams({ rightActionButton: () => this.renderElement() })///????
-     // }
-   }
-
-   // componentDidUpdate(state, props) {
-   //   console.log(this.state.showPass);
-   //   console.log(this.props.setEnablePin);
-   //   if (this.props.setEnablePin !== this.state.showPass)
-   //   this.props.setEnablePin(this.state.showPass)
-   //   console.log(this.props.setPinCode);
-   //   console.log(this.state.myNumber);
-   //   this.props.setPinCode(this.state.myNumber)
-   // }
 
    // buttonPressed(text) {
    //   const newText = this.state.inputText + text
@@ -212,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold'
   },
-  textSave1: { color: 'transparent',
+  textSave1: { color: 'red',
     marginRight: 20,
     paddingLeft: 20,
     fontSize: 18,

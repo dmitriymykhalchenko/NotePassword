@@ -1,6 +1,10 @@
-import React, { Component } from 'react';//головна + модал
-import { View, Text, FlatList, Image,StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert,  SafeAreaView } from 'react-native'
-
+import React, { Component } from 'react'//головна + модал
+import { View, Text, FlatList, Image, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert, SafeAreaView } from 'react-native'
+import { connect } from 'react-redux'
+import Modal from 'react-native-modal'
+import { Button, ThemeProvider, PricingCard } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import { createBottomTabNavigator, createAppContainer, NavigationActions, StackActions, TabBarBottom } from 'react-navigation'
 import {
   incrementCounter,
   decrementCounter,
@@ -12,91 +16,88 @@ import {
   editItem,
   editItemIndex,
   deleteaddItem,
-  updateaddItem
+  updateaddItem,
+  pinCode
 } from '../redux/actions'
-import {connect} from 'react-redux'
-import Modal from "react-native-modal"
-import { Button, ThemeProvider,PricingCard } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { createBottomTabNavigator, createAppContainer,NavigationActions,StackActions, TabBarBottom } from 'react-navigation';
-class Before extends Component {
-static navigationOptions = ({navigation}) => {
-  return {
-          tabBarComponent: () => null,
-          headerBackTitleVisible:null,
-          headerMode:'none',
-          headerBackTitle: null,
-          header: null,
-        }
-     };//????
 
-  UNSAFE_componentWillMount(){
-      if (this.props.enablePin){//true
-      // if this.props.enablePin &&|| {
-        //this.props.navigation.push('PinScreen')
-        const resetAction = StackActions.reset({
+class Before extends Component {
+static navigationOptions = ({ navigation }) => ({
+  tabBarComponent: () => null,
+  headerBackTitleVisible: null,
+  headerMode: 'none',
+  headerBackTitle: null,
+  header: null
+});//????
+
+UNSAFE_componentWillMount() {
+  if (this.props.enablePin) {
+    const resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: 'PinScreen' })
-      ],
-    });
-    this.props.navigation.dispatch(resetAction);
-        console.log("good")
-        return ;
-      }
-      if (!this.props.enablePin) {//false....
-        console.log("error")
-        const resetAction = StackActions.reset({
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+    console.log('good')
+    console.log('pinCode ', pinCode.length)
+    return
+  }
+  if (!this.props.enablePin) { //false....
+    console.log('error')
+
+    const resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: 'JustifyContentBasics' })
-      ],
-      });
-      this.props.navigation.dispatch(resetAction);
-       //this.props.navigation.push('JustifyContentBasics')
-        return
-      }
-
-    console.log(this.props.enablePin);
-    console.log('UNSAFE_componentWillMount()');
+      ]
+    })
+    this.props.navigation.dispatch(resetAction)
+    return
   }
 
-  render() {
+  console.log(this.props.enablePin)
+  console.log('UNSAFE_componentWillMount()')
+}
 
-    return null;
-  }
+render() {
+  return null
+}
 }
 
 function mapStateToProps(state) {
-    return {
-        counter: state.appData.get('counter'),
-        note: state.appData.get('note'),//витягуем  массив
-        addItem: state.appData.get('addItem'),
-        enablePin: state.appData.get('enablePin'),
+  return {
+    counter: state.appData.get('counter'),
+    note: state.appData.get('note'), //витягуем  массив
+    addItem: state.appData.get('addItem'),
+    enablePin: state.appData.get('enablePin'),
+    pinCode: state.appData.get('pinCode')
 
-    }
+  }
 }
 function mapDispatchToProps(dispatch) {
-    return {
+  return {
 
-        addItem(site,log,pass){
-            dispatch(addItem(site,log,pass))
-        },
-        resetaddItem() {
-            dispatch(resetaddItem())
-        },
-        deleteaddItem() {
-            dispatch(deleteaddItem())
-        },
-        editItemIndex(index) {
-            dispatch(editItemIndex(index))
-        },
-        updateaddItem(index) {
-            dispatch(updateaddItem(index))
-        },
+    addItem(site, log, pass) {
+      dispatch(addItem(site, log, pass))
+    },
+    resetaddItem() {
+      dispatch(resetaddItem())
+    },
+    deleteaddItem() {
+      dispatch(deleteaddItem())
+    },
+    editItemIndex(index) {
+      dispatch(editItemIndex(index))
+    },
+    updateaddItem(index) {
+      dispatch(updateaddItem(index))
+    },
+    setPinCode(value) {
+      dispatch(pinCode(value))
     }
+  }
 }
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Before)

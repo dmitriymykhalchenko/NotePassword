@@ -3,30 +3,28 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-     "ios": "react-native run-ios --simulator='iPhone SE' && npm run lint-watch",
-     "android": "react-native run-android && npm run lint-watch",
-     "lint": "esw client/screens/**",
-     "lint-watch": "esw -w --changed src/**"
-   },
+    "ios": "react-native run-ios --simulator='iPhone SE' && npm run lint-watch",
+    "android": "react-native run-android && npm run lint-watch",
+    "lint": "esw client/screens/**",
+    "lint-watch": "esw -w --changed src/**"
+  },
   "precommit": "lint",
   "prettier": {
-     "singleQuote": true,
-     "printWidth": 120,
-     "tabWidth": 2,
-     "trailingComma": "none",
-     "bracketSpacing": true,
-     "semi": false,
-     "useTabs": false,
-     "jsxBracketSameLine": false
+    "singleQuote": true,
+    "printWidth": 120,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "semi": false,
+    "useTabs": false,
+    "jsxBracketSameLine": false
   },
-
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.1",
     "immutable": "^4.0.0-rc.12",
     "react": "16.8.6",
     "react-native": "0.60.3",
     "react-native-action-button": "^2.8.5",
-    "react-native-draggable-flatlist": "^1.1.9",
     "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-interactable": "^1.0.0",
