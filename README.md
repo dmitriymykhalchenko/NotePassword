@@ -8,7 +8,7 @@
 &nbsp;
 [Setting](https://github.com/dmitriymykhalchenko/NotePassword/blob/master/img/4.png)
 &nbsp;
-<h4 style="font-size:50px;color:red;">If you have such a <b>"requireNativeComponent: "InteractableView" was not found in the UIManager"</b> error, follow the instructions below</h4>
+<h4 style="color:red;">If you have such a <b>"requireNativeComponent: "InteractableView" was not found in the UIManager"</b> error, follow the instructions below</h4>
 
 
 <h2>Installation </h2>
