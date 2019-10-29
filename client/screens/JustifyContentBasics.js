@@ -1,5 +1,5 @@
 import React, { Component } from 'react'//головна + модал + Interactable
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Keyboard, Dimensions, TextInput, Alert, Switch, SafeAreaView } from 'react-native'
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Keyboard, Dimensions, Platform, TextInput, Alert, Switch, SafeAreaView } from 'react-native'
 import Interactable from 'react-native-interactable'
 import { connect } from 'react-redux'
 import Modal from 'react-native-modal'
@@ -33,7 +33,7 @@ static navigationOptions = ({ navigation }) => ({
 
     <TouchableOpacity
       onPress={() => navigation.navigate('SettingScreen')}
-      style={{ marginRight: 20, paddingLeft: 20 }}
+      style={{ marginRight: 20, paddingLeft: 20,alignSelf:'center',justifyContent:'center'  }}
     >
       <Image source={require('../../img/settings.png')} style={styles.imgset} />
     </TouchableOpacity>
@@ -156,9 +156,9 @@ toggleSwitch() {
                   console.log('button')
                 }}
               >
-                <Text style={styles.itemSite}>  {item.site}</Text>
-                <Text style={styles.itemLog}>   Login {item.log}  </Text>
-                <Text style={styles.itemPass}>   Password {item.pass}</Text>
+                <Text style={styles.itemSite}>{item.site}</Text>
+                <Text style={styles.itemLog}>Login {item.log}  </Text>
+                <Text style={styles.itemPass}>Password {item.pass}</Text>
 
                 <View style={styles.buttonContainer} />
                </TouchableOpacity>)
@@ -168,10 +168,11 @@ toggleSwitch() {
 
             <Interactable.View
               style={{ zIndex: 1, flex: 1 }}
+              initialPosition={{x: 0, y: isIphoneX() ? -10 : -10}}
               ref={ref => { this.blue = ref }}
               snapPoints={[
                 { x: 0, y: -600 },
-                { x: 0, y: -10 }
+                { x: 0, y: isIphoneX() ? -10 : -10 }
               ]}
               onSnap={this.onDrawerSnap}
               verticalOnly
@@ -180,6 +181,7 @@ toggleSwitch() {
                 <TouchableOpacity
                   style={styles.addTouch}
                   onPress={() => {
+                    console.log('buttonPress ');
                     this.blue.snapTo({ index: 0 })
                   }}
                 >
@@ -240,7 +242,7 @@ toggleSwitch() {
                   <TouchableOpacity
                     onPress={() => {
                       console.log('button is pressed')
-                      this.blue.snapTo({ index: 1 })
+                      this.blue.snapTo({ index:1  })
                       Keyboard.dismiss()
                     }}
                   >
@@ -414,12 +416,16 @@ const styles = StyleSheet.create({
   img: {
     width: 18,
     height: 18,
-    tintColor: 'darkgray'
+    tintColor: 'darkgray',
+
   },
   addText: {
     fontSize: 20,
     color: 'darkgray',
-    alignSelf: 'center'
+    alignSelf:'center',
+    justifyContent:'center',
+    height:'50%',
+    width:'20%'
   },
   addTouch: {
     color: 'white',
@@ -434,16 +440,17 @@ const styles = StyleSheet.create({
   addView: {
     flex: 1,
     borderRadius: 20,
-    height: 660,
+    height: isIphoneX() ? 665 : 660,
     backgroundColor: 'white',
     padding: 5
     //paddingBottom:150,
   },
   interView: {
     position: 'absolute',
-    top: 620,
+    //top: isIphoneX() ? 660 : 620,
+    top: isIphoneX() ? 660 : 620,
     left: 0,
-    width: 410,
+    width: '100%',
     zIndex: 1,
     backgroundColor: 'transparent'
   },
@@ -486,7 +493,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-end'
   },
-  imgset: { width: 25, height: 25 },
+  imgset: { width: 25, height: 25},
   attribution: {
     position: 'absolute',
     bottom: 0,
