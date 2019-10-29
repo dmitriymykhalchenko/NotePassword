@@ -27,7 +27,7 @@
     "react-native-action-button": "^2.8.5",
     "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.4.1",
-    "react-native-interactable": "^1.0.0",
+    "react-native-interactable": "git+https://github.com/mtzluisalfredo/react-native-interactable",
     "react-native-modal": "^11.1.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^3.12.1",
