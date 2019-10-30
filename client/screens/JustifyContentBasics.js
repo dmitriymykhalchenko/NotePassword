@@ -1,11 +1,12 @@
 import React, { Component } from 'react'//головна + модал + Interactable
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Keyboard, Dimensions, Platform, TextInput, Alert, Switch, SafeAreaView } from 'react-native'
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Keyboard, TextInput, Alert, Switch, SafeAreaView } from 'react-native'
 import Interactable from 'react-native-interactable'
 import { connect } from 'react-redux'
 import Modal from 'react-native-modal'
 import { Button, ThemeProvider, PricingCard } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { createBottomTabNavigator, createAppContainer, TabBarBottom } from 'react-navigation'
+import { h, w, isIphoneX } from '../../constants'
 import {
   incrementCounter,
   decrementCounter,
@@ -33,7 +34,7 @@ static navigationOptions = ({ navigation }) => ({
 
     <TouchableOpacity
       onPress={() => navigation.navigate('SettingScreen')}
-      style={{ marginRight: 20, paddingLeft: 20,alignSelf:'center',justifyContent:'center'  }}
+      style={{ marginRight: 20, paddingLeft: 20, alignSelf: 'center', justifyContent: 'center' }}
     >
       <Image source={require('../../img/settings.png')} style={styles.imgset} />
     </TouchableOpacity>
@@ -46,7 +47,7 @@ static navigationOptions = ({ navigation }) => ({
   headerTitleStyle: {
     fontWeight: 'bold'
   },
-  height: '100%'
+  height: h
 });
 
 constructor(props) {
@@ -134,6 +135,10 @@ toggleSwitch() {
   }
 
   render() {
+    // const width = Dimensions.get('window').width
+    // const height  = Dimensions.get('window').height;
+    console.log('h', h)
+    console.log('w', w)
     console.log('render')
     const { navigate } = this.props.navigation
     console.log('1 ', this.props.note)
@@ -168,11 +173,13 @@ toggleSwitch() {
 
             <Interactable.View
               style={{ zIndex: 1, flex: 1 }}
-              initialPosition={{x: 0, y: isIphoneX() ? -10 : -10}}
+              //initialPosition={{x: 0, y: isIphoneX() ? -10 : -10}}
+              //initialPosition={{x: 0, y: -h/170 }}
               ref={ref => { this.blue = ref }}
               snapPoints={[
-                { x: 0, y: -600 },
-                { x: 0, y: isIphoneX() ? -10 : -10 }
+                { x: 0, y: -h / 1.3 },
+                { x: 0, y: -h / 600 }
+                //{ x: 0, y: isIphoneX() ? -10 : -10 }
               ]}
               onSnap={this.onDrawerSnap}
               verticalOnly
@@ -181,7 +188,7 @@ toggleSwitch() {
                 <TouchableOpacity
                   style={styles.addTouch}
                   onPress={() => {
-                    console.log('buttonPress ');
+                    console.log('buttonPress ')
                     this.blue.snapTo({ index: 0 })
                   }}
                 >
@@ -242,7 +249,7 @@ toggleSwitch() {
                   <TouchableOpacity
                     onPress={() => {
                       console.log('button is pressed')
-                      this.blue.snapTo({ index:1  })
+                      this.blue.snapTo({ index: 1 })
                       Keyboard.dismiss()
                     }}
                   >
@@ -309,17 +316,6 @@ function mapDispatchToProps(dispatch) {
 
   }
 }
-function isIphoneX() {
-  const dimen = Dimensions.get('window')
-
-  return (
-    Platform.OS === 'ios' &&
-       !Platform.isPad &&
-       !Platform.isTVOS &&
-       (dimen.height / dimen.width > 2 || dimen.height / dimen.width < 0.5)
-  )
-}
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
@@ -335,14 +331,14 @@ const styles = StyleSheet.create({
   viewSave: {
     color: 'white',
     borderRadius: 8,
-    width: 170,
+    width: w / 2.4,
     flex: 1,
     borderColor: 'gray',
-    marginLeft: 15,
+    marginLeft: 5,
     borderWidth: 0.5,
     backgroundColor: 'rgb(223,240,217)',
-    justifyContent: 'center',
-    flexDirection: 'column'
+    justifyContent: 'center'
+    //flexDirection: 'column'
   },
   textCancel: {
     color: 'gray',
@@ -353,7 +349,7 @@ const styles = StyleSheet.create({
   viewCancel: {
     color: 'white',
     borderRadius: 8,
-    width: 170,
+    width: w / 2.4,
     flex: 1,
     borderColor: 'gray',
     borderWidth: 0.5,
@@ -362,8 +358,8 @@ const styles = StyleSheet.create({
   },
   cancelSave: {
     color: 'white',
-    flex: 1 / 10,
-    marginTop: 15,
+    flex: 1 / 12,
+    marginTop: 5,
     justifyContent: 'space-around',
     backgroundColor: 'transparent',
     flexDirection: 'row'
@@ -379,13 +375,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 15,
     marginRight: 15,
-    marginTop: 10,
+    marginTop: 5,
     justifyContent: 'center'
   },
   inputPass: {
-    flex: 1 / 10,
+    flex: 1 / 14,
     marginTop: 10,
-    marginBottom: 15,
+    marginBottom: 5,
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 5,
@@ -394,7 +390,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(240, 243, 244 )'
   },
   inputLog: {
-    flex: 1 / 10,
+    flex: 1 / 14,
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
@@ -404,7 +400,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(240, 243, 244 )'
   },
   inputSite: {
-    flex: 1 / 10,
+    flex: 1 / 14,
     marginTop: 5,
     marginLeft: 10,
     marginRight: 10,
@@ -416,31 +412,37 @@ const styles = StyleSheet.create({
   img: {
     width: 18,
     height: 18,
-    tintColor: 'darkgray',
+    tintColor: 'darkgray'
 
   },
   addText: {
     fontSize: 20,
     color: 'darkgray',
-    alignSelf:'center',
-    justifyContent:'center',
-    height:'50%',
-    width:'20%'
+    alignSelf: 'center',
+    //justifyContent:'center',
+    // height:'50%',
+    // width:'20%'
+    height: isIphoneX() ? h / 14.9 : h / 19,
+    width: '20%'
   },
   addTouch: {
     color: 'white',
     borderTopRightRadius: 10,
-    width: '100%',
+    //width: '100%',
+    width: w,
     alignSelf: 'center',
-    //marginTop: 10,
+    //marginTop: 5,
     justifyContent: 'center',
     borderTopLeftRadius: 10,
-    flex: 1 / 10
+    flex: 1 / 13
+  //  backgroundColor:'yellow'
   },
   addView: {
     flex: 1,
+    //marginTop:5,
     borderRadius: 20,
-    height: isIphoneX() ? 665 : 660,
+    //height: isIphoneX() ? 665 : 660,
+    height: h,
     backgroundColor: 'white',
     padding: 5
     //paddingBottom:150,
@@ -448,9 +450,10 @@ const styles = StyleSheet.create({
   interView: {
     position: 'absolute',
     //top: isIphoneX() ? 660 : 620,
-    top: isIphoneX() ? 660 : 620,
+    //top: isIphoneX() ? 660 : 620,
+    top: h / 1.2,
     left: 0,
-    width: '100%',
+    width: w,
     zIndex: 1,
     backgroundColor: 'transparent'
   },
@@ -493,7 +496,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-end'
   },
-  imgset: { width: 25, height: 25},
+  imgset: {
+    width: isIphoneX() ? w / 10 : w / 12,
+    height: h / 22.5 },
   attribution: {
     position: 'absolute',
     bottom: 0,
