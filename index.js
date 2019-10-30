@@ -1,11 +1,10 @@
 import { AppRegistry, AsyncStorage, View, Text } from 'react-native'
-
 import React from 'react'
 import { Provider } from 'react-redux'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import throttle from 'lodash/throttle'
 import { fromJS } from 'immutable'
-import { SERIALIZE_STATE_INTERVAL } from './client/utils/constants'
+import { SERIALIZE_STATE_INTERVAL } from './constants'
 import createStore from './client/configs/store'
 
 import App from './main'
